@@ -10,8 +10,8 @@ import { AppComponent } from './app.component';
 import { RegistrosService } from './_services/registros.service';
 import { AuthGuard } from './_guard/auth.guard';
 
-// Layout
-import { DashboardUiModule } from './ui/ui.module';
+// Layouts for both dashboard and landing-page
+import { DashboardUiModule } from './dashboard/_ui/ui.module';
 
 // Pages
 import { DashboardComponent } from './dashboard/dashboard.component';
