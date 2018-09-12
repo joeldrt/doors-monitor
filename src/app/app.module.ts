@@ -5,26 +5,34 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 // Services
 import { RegistrosService } from './_services/registros.service';
 import { AuthGuard } from './_guard/auth.guard';
 
 // Layout
-import { UiModule } from './ui/ui.module';
+import { DashboardUiModule } from './ui/ui.module';
+
+// Pages
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ResumenComponent } from './dashboard/resumen/resumen.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { WelcomeComponent } from './landing-page/welcome/welcome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    DashboardComponent,
+    ResumenComponent,
+    LandingPageComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    UiModule
+    DashboardUiModule
   ],
   providers: [
     RegistrosService,

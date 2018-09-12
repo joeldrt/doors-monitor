@@ -1,10 +1,10 @@
-import { UiModule } from './ui.module';
+import { DashboardUiModule } from './ui.module';
 
 describe('UiModule', () => {
-  let uiModule: UiModule;
+  let uiModule: DashboardUiModule;
 
   beforeEach(() => {
-    uiModule = new UiModule();
+    uiModule = new DashboardUiModule();
   });
 
   it('should create an instance', () => {

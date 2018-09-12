@@ -11,4 +11,4 @@ import { FooterComponent } from './footer/footer.component';
   declarations: [LayoutComponent, HeaderComponent, FooterComponent],
   exports: [LayoutComponent]
 })
-export class UiModule { }
+export class DashboardUiModule { }

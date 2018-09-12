@@ -1,12 +1,16 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './_guard/auth.guard';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { DASHBOARD_ROUTES } from './dashboard/dashboard.routes';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { LANDING_PAGE_ROUTES } from './landing-page/landing-page.routes';
 
 const APP_ROUTES: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', canActivate: [AuthGuard], component: DashboardComponent }
+  { path: '', redirectTo: '/resumen', pathMatch: 'full' },
+  { path: '', canActivate: [AuthGuard], component: DashboardComponent, children: DASHBOARD_ROUTES },
+  { path: '', component: LandingPageComponent, children: LANDING_PAGE_ROUTES }
 ];
 
 @NgModule({
