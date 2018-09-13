@@ -18,6 +18,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ResumenComponent } from './dashboard/resumen/resumen.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { WelcomeComponent } from './landing-page/welcome/welcome.component';
+import { PuertasComponent } from './dashboard/puertas/puertas.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { WelcomeComponent } from './landing-page/welcome/welcome.component';
     DashboardComponent,
     ResumenComponent,
     LandingPageComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    PuertasComponent
   ],
   imports: [
     BrowserModule,
