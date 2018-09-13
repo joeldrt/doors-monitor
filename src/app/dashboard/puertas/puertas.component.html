@@ -1,3 +1,31 @@
-<p>
-  puertas works!
-</p>
+<div>
+  <h1>Reporte de puertas</h1>
+  <div class="mb-5">
+    <form class="form-inline">
+      <div class="form-group mr-4">
+        <label for="fechaInicial" class="mr-2">Fecha Inicial</label>
+        <input type="date" class="form-control" id="fechaInicial" [(ngModel)]="fecha_inicial" name="fecha_inicial">
+      </div>
+      <div class="form-group mr-4">
+        <label for="fechaFinal" class="mr-2">Fecha Final</label>
+        <input type="date" class="form-control" id="fechaFinal" [(ngModel)]="fecha_final" name="fecha_final">
+      </div>
+      <button type="submit" class="btn btn-primary"
+        (click)="getResults()"
+        [disabled]="(fecha_final == undefined || fecha_final == undefined)"
+        >Ver Reporte</button>
+    </form>
+  </div>
+  <div>
+    <div *ngIf="registros == undefined || registros == null || registros.length <= 0">
+      <h4>No hay registros para mostrar</h4>
+    </div>
+    <div *ngIf="registros && registros.length > 0">
+      <div class="card mb-5" *ngFor="let registro of registros">
+        <div class="card-header">{{registro.sensor_id}} - {{registro.fecha_creacion}}</div>
+        <div class="card-body">{{registro.tipo_evento}}</div>
+        <div class="card-footer">{{registro.id}}</div>
+      </div>
+    </div>
+  </div>
+</div>

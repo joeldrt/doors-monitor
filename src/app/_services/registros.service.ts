@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 // Base URL
@@ -10,7 +10,7 @@ import { Registro } from '../_models/registro';
 
 @Injectable()
 export class RegistrosService {
-  private API_URL: String;
+  private API_URL: string;
 
   constructor(
     private http: HttpClient
@@ -18,7 +18,10 @@ export class RegistrosService {
     this.API_URL = environment.API_URL;
   }
 
-  getRegistros(): Observable<HttpResponse<Registro[]>> {
-    return this.http.get<Registro[]>(this.API_URL + 'api/registros?days=3', { observe: 'response'});
+  getRegistros(fecha_inicial: string, fecha_final: string): Observable<HttpResponse<Registro[]>> {
+    const parametros = new HttpParams()
+      .set('fecha_inicial', fecha_inicial)
+      .set('fecha_final', fecha_final);
+    return this.http.get<Registro[]>(this.API_URL + 'api/registros', { params: parametros, observe: 'response'});
   }
 }

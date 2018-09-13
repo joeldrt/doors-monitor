@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 // Services
 import { RegistrosService } from './_services/registros.service';
 import { AuthGuard } from './_guard/auth.guard';
+import { ToasterService } from './_services/toaster.service';
 
 // Layouts for both dashboard and landing-page
 import { DashboardUiModule } from './dashboard/_ui/ui.module';
@@ -38,6 +39,7 @@ import { PuertasComponent } from './dashboard/puertas/puertas.component';
   ],
   providers: [
     RegistrosService,
+    ToasterService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

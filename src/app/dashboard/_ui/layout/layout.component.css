@@ -1,0 +1,6 @@
+.container {
+  min-height: calc(100vh - 112px);
+  max-height: calc(100vh - 112px);
+  overflow: auto;
+  max-width: none !important;
+}
