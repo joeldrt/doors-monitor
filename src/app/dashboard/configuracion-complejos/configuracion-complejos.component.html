@@ -1,0 +1,76 @@
+<div class="dashboard-dg-nav">
+  <div class="row">
+    <div class="col">
+        <h5>
+          <button type="button" class="btn btn-link mr-auto" routerLink="/configuracion">
+            <span class="fas fa-chevron-left"></span>
+          </button>
+        </h5>
+    </div>
+    <div class="col" style="text-align: center;">
+      <h5>
+        <span class="fas fa-building d-none d-lg-block"></span>
+        Complejos
+      </h5>
+    </div>
+    <div class="col">
+      <div class="pull-right">
+        <!-- boton agregar complejo -->
+        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#agregarComplejoModal">
+          <span class="fas fa-plus"></span>
+        </button>
+        <!-- final boton agregar complejo -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dashboard-dg-content">
+  <div *ngIf="!complejos || complejos.length <= 0" class="alert alert-dark">
+    Aun no cuenta con complejos registrados
+  </div>
+  <div *ngIf="complejos && complejos.length > 0">
+    <div class="card mb-3" *ngFor="let complejo of complejos">
+      <div class="card-header">
+        {{complejo.nombre}}
+      </div>
+      <div class="card-body">
+        <h6 class="card-title">Direccion:</h6>
+        <p class="card-text">{{complejo.direccion}}</p>
+        <a href="#" class="btn btn-link">Detalle</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="agregarComplejoModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Complejo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-Label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="nombreComplejo1">Nombre</label>
+            <input class="form-control" id="nombreComplejo1" placeholder="Nombre del complejo"
+              [(ngModel)]="complejo_a_agregar.nombre" name="nombre" />
+          </div>
+          <div class="form-group">
+            <label for="direccion1">Direccion</label>
+            <textarea class="form-control" id="direccion1" placeholder="Dirección" rows="3"
+              [(ngModel)]="complejo_a_agregar.direccion" name="direccion"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"
+          [disabled]="!complejo_a_agregar.nombre || !complejo_a_agregar.direccion"
+          (click)="guardarComplejo()">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>

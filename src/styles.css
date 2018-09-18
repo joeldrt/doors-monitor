@@ -1,3 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
+@import "~ngx-toastr/toastr.css";
+
+.container {
+  min-height: calc(100vh - 132px);
+  max-height: calc(100vh - 132px);
+  margin-top: 20px;
+  overflow: auto;
+  max-width: none !important;
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+
+.dashboard-dg-nav {
+  padding-right: 15px;
+  padding-left: 15px;
+  min-height: 56px;
+  max-height: 56px;
+  width: 100%;
+}
+
+.dashboard-dg-content {
+  padding-right: 15px;
+  padding-left: 15px;
+  min-height: calc(100vh - 189px);
+  max-height: calc(100vh - 189px);
+  width: 100%;
+  overflow: auto;
+}

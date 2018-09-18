@@ -2,18 +2,44 @@
   <h1>Reporte de puertas</h1>
   <div class="mb-5">
     <form class="form-inline">
-      <div class="form-group mr-4">
-        <label for="fechaInicial" class="mr-2">Fecha Inicial</label>
-        <input type="date" class="form-control" id="fechaInicial" [(ngModel)]="fecha_inicial" name="fecha_inicial">
-      </div>
-      <div class="form-group mr-4">
-        <label for="fechaFinal" class="mr-2">Fecha Final</label>
-        <input type="date" class="form-control" id="fechaFinal" [(ngModel)]="fecha_final" name="fecha_final">
-      </div>
-      <button type="submit" class="btn btn-primary"
+      <div class="mb-2 form-inline">
+        <div class="form-group mr-4">
+          <label for="fechaInicial" class="mr-2">Fecha Inicial</label>
+          <input type="date" class="form-control" id="fechaInicial" [(ngModel)]="fecha_inicial" name="fecha_inicial">
+        </div>
+        <div class="form-group mr-4">
+          <label for="fechaFinal" class="mr-2">Fecha Final</label>
+          <input type="date" class="form-control" id="fechaFinal" [(ngModel)]="fecha_final" name="fecha_final">
+        </div>
+        <div class="form-group mr-4" *ngIf="complejos && complejos.length > 0">
+          <label for="complejo" class="mr-2">Complejo</label>
+          <select name="complejo_seleccionado" (change)="complejoChange($event.target.value)" id="complejo">
+            <option value="">------------</option>
+            <option *ngFor="let complejo of complejos" [value]="complejo" >{{complejo}}</option>
+          </select>
+        </div>
+        <div class="form-group mr-4" *ngIf="habitaciones && habitaciones.length > 0">
+            <label for="habitacion" class="mr-2">Habitacion</label>
+            <select name="habitacion_seleccionada" (change)="habitacionChange($event.target.value)" id="habitacion">
+              <option value="TODAS">Todas las habitaciones</option>
+              <option *ngFor="let habitacion of habitaciones" [value]="habitacion" >{{habitacion}}</option>
+            </select>
+          </div>
+    </div>
+    <div class="mb-2 form-inline">
+      <button type="submit" class="btn btn-primary mr-2 mb-2"
         (click)="getResults()"
-        [disabled]="(fecha_final == undefined || fecha_final == undefined)"
-        >Ver Reporte</button>
+        [disabled]="(fecha_inicial == undefined || fecha_final == undefined || complejo_seleccionado == undefined || habitacion_seleccionada == undefined)">
+        <span class="fas fa-list-ul"></span>
+        Generar Reporte
+      </button>
+      <button *ngIf="registros && registros.length > 0 && !loading" type="submit" class="btn btn-success mr-2 mb-2"
+        (click)="downloadExcel()"
+        [disabled]="(fecha_inicial == undefined || fecha_final == undefined || complejo_seleccionado == undefined || habitacion_seleccionada == undefined)">
+        <span class="fas fa-th-list"></span>
+        Descargar Excel
+      </button>
+    </div>
     </form>
   </div>
   <div>
@@ -22,8 +48,19 @@
     </div>
     <div *ngIf="registros && registros.length > 0">
       <div class="card mb-5" *ngFor="let registro of registros">
-        <div class="card-header">{{registro.sensor_id}} - {{registro.fecha_creacion}}</div>
-        <div class="card-body">{{registro.tipo_evento}}</div>
+        <div class="card-header">{{registro.fecha_creacion}}</div>
+        <div class="card-body">
+          <div *ngIf="registro.tipo_evento == CERRADO">
+              <span>{{registro.sensor}}</span>
+              <i class="fas fa-door-closed mr-2"></i>
+              <span class="badge badge-danger">Cerrado</span>
+          </div>
+          <div *ngIf="registro.tipo_evento == ABIERTO">
+              <span>{{registro.sensor}}</span>
+              <i class="fas fa-door-open mr-2"></i>
+              <span class="badge badge-success">Abierto</span>
+          </div>
+        </div>
         <div class="card-footer">{{registro.id}}</div>
       </div>
     </div>

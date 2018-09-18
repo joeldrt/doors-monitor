@@ -1,9 +1,32 @@
-<nav class="navbar navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">Door Monitor</a>
-  <div class="navbar-expand mr-auto">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/resumen" routerLinkActive="active">Resumen</a>
-      <a class="nav-item nav-link" routerLink="/puertas" routerLinkActive="active">Puertas</a>
-    </div>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">DGDM</a>
+  <button class="navbar-toggler" type="button" (click)="toggleCollapse()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="navbar-collapse" [class.collapse]="collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/resumen" routerLinkActive="active" (click)="selectAndClose()">Resumen</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Aplicación
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/configuracion" routerLinkActive="active" (click)="selectAndClose()">
+            <i class="fas fa-cogs mr-1"></i>
+            <span>Configuración</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()" (click)="selectAndClose()">
+              <i class="fas fa-power-off mr-1"></i>
+              <span>Salir</span>
+          </a>
+        </div>
+      </li>
+    </ul>
   </div>
 </nav>

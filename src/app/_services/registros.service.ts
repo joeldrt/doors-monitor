@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ResponseContentType } from '@angular/http';
 import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -18,10 +19,31 @@ export class RegistrosService {
     this.API_URL = environment.API_URL;
   }
 
-  getRegistros(fecha_inicial: string, fecha_final: string): Observable<HttpResponse<Registro[]>> {
+  obtenerComplejos(): Observable<HttpResponse<String[]>> {
+    return this.http.get<String[]>(this.API_URL + 'api/complejos', {observe: 'response'});
+  }
+
+  obtenerHabitaciones(complejo: string): Observable<HttpResponse<String[]>> {
+    const parametros = new HttpParams()
+      .set('complejo', complejo);
+    return this.http.get<String[]>(this.API_URL + 'api/habitaciones', {params: parametros, observe: 'response'});
+  }
+
+  getRegistros(fecha_inicial: string, fecha_final: string, complejo: string, habitacion: string): Observable<HttpResponse<Registro[]>> {
     const parametros = new HttpParams()
       .set('fecha_inicial', fecha_inicial)
-      .set('fecha_final', fecha_final);
-    return this.http.get<Registro[]>(this.API_URL + 'api/registros', { params: parametros, observe: 'response'});
+      .set('fecha_final', fecha_final)
+      .set('complejo', complejo)
+      .set('habitacion', habitacion);
+    return this.http.get<Registro[]>(this.API_URL + 'api/registros', {params: parametros, observe: 'response'});
+  }
+
+  downloadExcelFile(fecha_inicial: string, fecha_final: string, complejo: string, habitacion: string) {
+    const parametros = new HttpParams()
+      .set('fecha_inicial', fecha_inicial)
+      .set('fecha_final', fecha_final)
+      .set('complejo', complejo)
+      .set('habitacion', habitacion);
+    return this.http.get(this.API_URL + 'api/descargar_excel', {params: parametros, responseType: 'blob'});
   }
 }

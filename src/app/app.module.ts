@@ -6,10 +6,18 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
+// JWT support
+import { JwtInterceptor } from './_jwt/jwt.interceptor';
+
 // Services
 import { RegistrosService } from './_services/registros.service';
 import { AuthGuard } from './_guard/auth.guard';
-import { ToasterService } from './_services/toaster.service';
+import { AuthenticationService } from './_services/authentication.service';
+import { ComplejoService } from './_services/complejo.service';
+
+// Toaster module
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Layouts for both dashboard and landing-page
 import { DashboardUiModule } from './dashboard/_ui/ui.module';
@@ -20,6 +28,9 @@ import { ResumenComponent } from './dashboard/resumen/resumen.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { WelcomeComponent } from './landing-page/welcome/welcome.component';
 import { PuertasComponent } from './dashboard/puertas/puertas.component';
+import { LoginComponent } from './landing-page/login/login.component';
+import { ConfiguracionComponent } from './dashboard/configuracion/configuracion.component';
+import { ConfiguracionComplejosComponent } from './dashboard/configuracion-complejos/configuracion-complejos.component';
 
 @NgModule({
   declarations: [
@@ -28,19 +39,34 @@ import { PuertasComponent } from './dashboard/puertas/puertas.component';
     ResumenComponent,
     LandingPageComponent,
     WelcomeComponent,
-    PuertasComponent
+    PuertasComponent,
+    LoginComponent,
+    ConfiguracionComponent,
+    ConfiguracionComplejosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    DashboardUiModule
+    DashboardUiModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    })
   ],
   providers: [
     RegistrosService,
-    ToasterService,
-    AuthGuard
+    AuthenticationService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    ComplejoService
   ],
   bootstrap: [AppComponent]
 })

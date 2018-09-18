@@ -1,0 +1,22 @@
+<div class="login_page">
+    <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Login</h4>
+          <form>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" id="email" name="email"
+              [(ngModel)]="email" required/>
+            </div>
+            <div class="form-group">
+              <label for="pwd">Password:</label>
+              <input type="password" class="form-control" id="pwd" name="password"
+                [(ngModel)]="password" required/>
+            </div>
+            <button type="submit" class="btn btn-primary"
+              (click)="performLogin()"
+              [disabled]="email == undefined || email === '' || password == undefined || password === ''">Login</button>
+          </form>
+        </div>
+      </div>
+</div>

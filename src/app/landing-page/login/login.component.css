@@ -1,0 +1,11 @@
+.login_page {
+  width: auto;
+  margin-top: 20px;
+  align-content: center;
+}
+
+.login_page .card {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
