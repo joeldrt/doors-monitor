@@ -1,0 +1,92 @@
+<div class="dashboard-dg-nav">
+  <div class="row">
+    <div class="col">
+        <h5>
+        <button type="button" class="btn btn-link mr-auto" routerLink="/configuracion/complejos">
+            <span class="fas fa-chevron-left"></span>
+        </button>
+        </h5>
+    </div>
+    <div class="col" style="text-align: center;">
+    <h5 *ngIf="complejo">
+        <span class="fas fa-building d-none d-lg-block"></span>
+        {{complejo.nombre}}
+    </h5>
+    </div>
+    <div class="col">
+      <div class="pull-right">
+          <button type="button" class="btn btn-link" *ngIf="!editing" (click)="ponerModoEdicion()">
+              editar
+          </button>
+          <button type="button" class="btn btn-link" *ngIf="editing" (click)="editarComplejo()">
+              guardar
+          </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dashboard-dg-content">
+  <form *ngIf="complejo">
+    <div class="form-group">
+      <label for="nombre1">Nombre</label>
+      <input type="text" class="form-control" id="nombre1" placeholder="Nombre del Complejo" [disabled]="!editing"
+      [(ngModel)]="complejo.nombre" name="nombre">
+    </div>
+    <div class="form-group">
+      <label for="direccion1">Dirección</label>
+      <textarea rows="3" class="form-control" id="direccion1" placeholder="Dirección del complejo" [disabled]="!editing"
+      [(ngModel)]="complejo.direccion" name="direccion"></textarea>
+    </div>
+    <div class="form-group">
+      <div style="width: 100%" class="mb-4">
+        <label>Teléfonos</label>
+        <div class="pull-right">
+          <button type="button" class="btn btn-link" (click)="agregarEspacioTelefono()" *ngIf="editing">
+              <span class="fas fa-plus"></span>
+          </button>
+        </div>
+      </div>
+      <div class="form-group row" *ngFor="let telefono of telefonos; let idx = index; trackBy: customTrackBy">
+        <div class="col-10">
+          <input type="text" class="form-control" name="tel-{{idx}}" [(ngModel)]="telefonos[idx]" [disabled]="!editing">
+        </div>
+        <div class="col-2">
+          <div class="pull-right">
+            <button type="button" class="btn btn-danger" (click)="removerTelefono(idx)" *ngIf="editing">
+              <span class="fas fa-minus-circle"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="editing">
+        <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#modalMensajeBorrarComplejo">
+          Borrar Complejo
+        </button>
+    </div>
+  </form>
+</div>
+
+<!-- Ventana modal mensaje para borrar complejo-->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalMensajeBorrarComplejo" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Borrar Complejo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          Estas a punto de borrar un complejo, esta acción no puede ser revertida. ¿Deseas continuar?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="borrarComplejo()">
+          Continuar Borrado
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin ventana modal mensaje para borrar complejo-->

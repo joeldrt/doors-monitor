@@ -31,6 +31,9 @@ import { PuertasComponent } from './dashboard/puertas/puertas.component';
 import { LoginComponent } from './landing-page/login/login.component';
 import { ConfiguracionComponent } from './dashboard/configuracion/configuracion.component';
 import { ConfiguracionComplejosComponent } from './dashboard/configuracion-complejos/configuracion-complejos.component';
+import {
+  ConfiguracionComplejosDetalleComponent
+} from './dashboard/configuracion-complejos-detalle/configuracion-complejos-detalle.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import { ConfiguracionComplejosComponent } from './dashboard/configuracion-compl
     PuertasComponent,
     LoginComponent,
     ConfiguracionComponent,
-    ConfiguracionComplejosComponent
+    ConfiguracionComplejosComponent,
+    ConfiguracionComplejosDetalleComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,7 @@ import { ConfiguracionComplejosComponent } from './dashboard/configuracion-compl
     DashboardUiModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 3690,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     })

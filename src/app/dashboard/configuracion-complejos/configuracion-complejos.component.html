@@ -34,14 +34,15 @@
         {{complejo.nombre}}
       </div>
       <div class="card-body">
-        <h6 class="card-title">Direccion:</h6>
+        <h6 class="card-title">Dirección:</h6>
         <p class="card-text">{{complejo.direccion}}</p>
-        <a href="#" class="btn btn-link">Detalle</a>
+        <button href="#" class="btn btn-link" [routerLink]="['/configuracion/complejos', complejo.id]">Detalle</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Ventana modal para agregar un complejo-->
 <div class="modal fade" tabindex="-1" role="dialog" id="agregarComplejoModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -74,3 +75,4 @@
     </div>
   </div>
 </div>
+<!-- Fin ventana modal para agregar un complejo-->

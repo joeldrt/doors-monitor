@@ -30,12 +30,12 @@ export class ComplejoService {
     return this.http.get<Complejo[]>(this.API_URL, {observe: 'response'});
   }
 
-  obtenerComplejo(complejo_id: string): Observable<HttpResponse<Complejo[]>> {
-    return this.http.get<Complejo[]>(this.API_URL + '/' + complejo_id, {observe: 'response'});
+  obtenerComplejo(complejo_id: string): Observable<HttpResponse<Complejo>> {
+    return this.http.get<Complejo>(this.API_URL + '/' + complejo_id, {observe: 'response'});
   }
 
-  borrarComplejo(complejo_id: string): Observable<HttpResponse<Complejo[]>> {
-    return this.http.delete<Complejo[]>(this.API_URL + '/' + complejo_id, {observe: 'response'});
+  borrarComplejo(complejo_id: string): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(this.API_URL + '/' + complejo_id, {observe: 'response'});
   }
 
 }
