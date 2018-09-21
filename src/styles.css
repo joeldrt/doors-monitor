@@ -17,7 +17,36 @@
   padding-left: 15px;
   min-height: 56px;
   max-height: 56px;
-  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.dashboard-dg-nav .left-place {
+  min-width: 25%;
+  max-width: 25%;
+  display:inline-block;
+  vertical-align: top;
+}
+
+.dashboard-dg-nav .center-place {
+  min-width: 50%;
+  max-width: 50%;
+  max-height: inherit;
+  min-height: inherit;
+  text-overflow: ellipsis;
+  text-align: center;
+  display:inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.dashboard-dg-nav .right-place {
+  min-width: 25%;
+  max-width: 25%;
+  display:inline-block;
+  vertical-align: top;
 }
 
 .dashboard-dg-content {

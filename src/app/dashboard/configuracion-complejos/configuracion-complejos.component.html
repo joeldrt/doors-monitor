@@ -1,26 +1,24 @@
 <div class="dashboard-dg-nav">
-  <div class="row">
-    <div class="col">
-        <h5>
-          <button type="button" class="btn btn-link mr-auto" routerLink="/configuracion">
-            <span class="fas fa-chevron-left"></span>
-          </button>
-        </h5>
-    </div>
-    <div class="col" style="text-align: center;">
+  <div class="left-place">
       <h5>
-        <span class="fas fa-building d-none d-lg-block"></span>
-        Complejos
-      </h5>
-    </div>
-    <div class="col">
-      <div class="pull-right">
-        <!-- boton agregar complejo -->
-        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#agregarComplejoModal">
-          <span class="fas fa-plus"></span>
+        <button type="button" class="btn btn-link mr-auto" routerLink="/configuracion">
+          <span class="fas fa-chevron-left"></span>
         </button>
-        <!-- final boton agregar complejo -->
-      </div>
+      </h5>
+  </div>
+  <div class="center-place">
+    <h5>
+      <span class="fas fa-building d-none d-lg-block"></span>
+      Complejos
+    </h5>
+  </div>
+  <div class="right-place">
+    <div class="pull-right">
+      <!-- boton agregar complejo -->
+      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#agregarComplejoModal">
+        <span class="fas fa-plus"></span>
+      </button>
+      <!-- final boton agregar complejo -->
     </div>
   </div>
 </div>
@@ -36,7 +34,7 @@
       <div class="card-body">
         <h6 class="card-title">Dirección:</h6>
         <p class="card-text">{{complejo.direccion}}</p>
-        <button href="#" class="btn btn-link" [routerLink]="['/configuracion/complejos', complejo.id]">Detalle</button>
+        <button class="btn btn-link" [routerLink]="['/configuracion/complejos', complejo.id]">Detalle</button>
       </div>
     </div>
   </div>

@@ -1,0 +1,61 @@
+<div class="dashboard-dg-nav">
+  <div class="left-place">
+    <h5>
+      <button type="button" class="btn btn-link mr-auto" routerLink="/configuracion/habitaciones">
+          <span class="fas fa-chevron-left"></span>
+      </button>
+    </h5>
+  </div>
+  <div class="center-place">
+    <h5 *ngIf="habitacion && complejo">
+        <div *ngIf="habitacion && habitacion.tipo">
+          <span [ngClass]="tipos_habitacion.get(habitacion.tipo)"></span>
+        </div>
+        {{habitacion.nombre}}
+    </h5>
+  </div>
+  <div class="right-place">
+    <div class="pull-right">
+        <button type="button" class="btn btn-link" *ngIf="!editing" (click)="ponerModoEdicion()">
+            editar
+        </button>
+        <button type="button" class="btn btn-link" *ngIf="editing" (click)="editarHabitacion()">
+            guardar
+        </button>
+    </div>
+  </div>
+</div>
+<div class="dashboard-dg-content">
+  <form *ngIf="habitacion && complejo">
+    <div class="form-group">
+      <label for="complejo_nombre1">Complejo</label>
+      <input type="text" class="form-control" disabled="true" id="complejo_nombre1"
+        [value]="complejo.nombre">
+    </div>
+    <div class="form-group">
+      <label for="nombre1">Nombre</label>
+      <input type="text" class="form-control" id="nombre1"
+        [(ngModel)]="habitacion.nombre" name="habitacion_nombre" [disabled]="!editing">
+    </div>
+    <div class="form-group">
+      <label for="tipoHabitacion1">Tipo de Habitación</label>
+      <select class="form-control" id="tipoHabitacion1"
+        [(ngModel)]="habitacion.tipo" name="tipo_habitacion_selec" [disabled]="!editing">
+        <option *ngFor="let tipo of tipos_keys(); trackBy: customTrackBy" [ngValue]="tipo">
+          <span [ngClass]="tipos_habitacion.get(tipo)"></span>
+          {{tipo}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="precioBase1">Precio Base</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
+        </div>
+        <input type="number" class="form-control" aria-label="Cantidad (al peso mas cercano)" id="precioBase1"
+          [(ngModel)]="habitacion.precio_base" name="precio_base" [disabled]="!editing">
+      </div>
+    </div>
+  </form>
+</div>

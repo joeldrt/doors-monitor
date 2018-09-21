@@ -14,12 +14,13 @@ import { RegistrosService } from './_services/registros.service';
 import { AuthGuard } from './_guard/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { ComplejoService } from './_services/complejo.service';
+import { HabitacionesService } from './_services/habitaciones.service';
 
 // Toaster module
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// Layouts for both dashboard and landing-page
+// Layout for dashboard
 import { DashboardUiModule } from './dashboard/_ui/ui.module';
 
 // Pages
@@ -34,6 +35,10 @@ import { ConfiguracionComplejosComponent } from './dashboard/configuracion-compl
 import {
   ConfiguracionComplejosDetalleComponent
 } from './dashboard/configuracion-complejos-detalle/configuracion-complejos-detalle.component';
+import { ConfiguracionHabitacionesComponent } from './dashboard/configuracion-habitaciones/configuracion-habitaciones.component';
+import {
+  ConfiguracionHabitacionesDetalleComponent
+} from './dashboard/configuracion-habitaciones-detalle/configuracion-habitaciones-detalle.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +51,9 @@ import {
     LoginComponent,
     ConfiguracionComponent,
     ConfiguracionComplejosComponent,
-    ConfiguracionComplejosDetalleComponent
+    ConfiguracionComplejosDetalleComponent,
+    ConfiguracionHabitacionesComponent,
+    ConfiguracionHabitacionesDetalleComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +64,7 @@ import {
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 3690,
-      positionClass: 'toast-bottom-right',
+      positionClass: 'toast-top-center',
       preventDuplicates: true,
     })
   ],
@@ -70,7 +77,8 @@ import {
       useClass: JwtInterceptor,
       multi: true
     },
-    ComplejoService
+    ComplejoService,
+    HabitacionesService
   ],
   bootstrap: [AppComponent]
 })

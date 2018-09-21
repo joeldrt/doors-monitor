@@ -1,0 +1,82 @@
+<div class="dashboard-dg-nav">
+  <div class="left-place">
+      <h5>
+        <button type="button" class="btn btn-link mr-auto" routerLink="/configuracion">
+          <span class="fas fa-chevron-left"></span>
+        </button>
+      </h5>
+  </div>
+  <div class="center-place">
+    <h5>
+      <span class="fas fa-bed d-none d-lg-block"></span>
+      Habitaciones
+    </h5>
+  </div>
+  <div class="right-place">
+    <div class="pull-right">
+      <!-- boton agregar habitacion -->
+      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#agregarHabitacionModal">
+        <span class="fas fa-plus"></span>
+      </button>
+      <!-- final boton agregar habitacion -->
+    </div>
+  </div>
+</div>
+<div class="dashboard-dg-content">
+  <div *ngIf="complejos && complejos.length > 0">
+    <div class="card mb-3" *ngFor="let complejo of complejos">
+      <div class="card-header">
+        {{complejo.nombre}}
+      </div>
+      <div class="card-body">
+        <div *ngIf="!habitaciones_por_complejo.get(complejo.id) || habitaciones_por_complejo.get(complejo.id).length <= 0" class="alert alert-dark">
+          Aun no cuenta con habitaciones registradas en el complejo
+        </div>
+        <div *ngFor="let habitacion of habitaciones_por_complejo.get(complejo.id)">
+            <button class="btn btn-link" [routerLink]="['/configuracion/habitaciones', habitacion.id]">
+              <span [ngClass]="tipos_habitacion.get(habitacion.tipo)"></span>
+              {{habitacion.nombre}}
+            </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ventana modal para agregar una habitacion-->
+<div class="modal fade" tabindex="-1" role="dialog" id="agregarHabitacionModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar Habitación</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-Label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form *ngIf="habitacion_nueva && complejos">
+            <div class="form-group">
+              <label for="complejo1">Complejo</label>
+              <select class="form-control" id="complejo1"
+                [(ngModel)]="complejo_seleccionado" name="complejo_select">
+                <option *ngFor="let complejo of complejos" [ngValue]="complejo">
+                  {{complejo.nombre}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="habitacion_nombre1">Nombre</label>
+              <input class="form-control" id="habitacion_nombre1" placeholder="Nombre"
+                [(ngModel)]="habitacion_nueva.nombre" name="habitacion_nombre">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal"
+            [disabled]="!habitacion_nueva.nombre || !complejo_seleccionado.id" (click)="agregarHabitacionNueva()">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fin ventana modal para agregar una habitacion-->

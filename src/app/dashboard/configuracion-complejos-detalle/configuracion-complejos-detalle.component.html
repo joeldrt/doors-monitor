@@ -1,27 +1,25 @@
 <div class="dashboard-dg-nav">
-  <div class="row">
-    <div class="col">
-        <h5>
-        <button type="button" class="btn btn-link mr-auto" routerLink="/configuracion/complejos">
-            <span class="fas fa-chevron-left"></span>
-        </button>
-        </h5>
-    </div>
-    <div class="col" style="text-align: center;">
+  <div class="left-place">
+      <h5>
+      <button type="button" class="btn btn-link mr-auto" routerLink="/configuracion/complejos">
+          <span class="fas fa-chevron-left"></span>
+      </button>
+      </h5>
+  </div>
+  <div class="center-place">
     <h5 *ngIf="complejo">
         <span class="fas fa-building d-none d-lg-block"></span>
         {{complejo.nombre}}
     </h5>
-    </div>
-    <div class="col">
-      <div class="pull-right">
-          <button type="button" class="btn btn-link" *ngIf="!editing" (click)="ponerModoEdicion()">
-              editar
-          </button>
-          <button type="button" class="btn btn-link" *ngIf="editing" (click)="editarComplejo()">
-              guardar
-          </button>
-      </div>
+  </div>
+  <div class="right-place">
+    <div class="pull-right">
+        <button type="button" class="btn btn-link" *ngIf="!editing" (click)="ponerModoEdicion()">
+            editar
+        </button>
+        <button type="button" class="btn btn-link" *ngIf="editing" (click)="editarComplejo()">
+            guardar
+        </button>
     </div>
   </div>
 </div>
@@ -60,7 +58,7 @@
       </div>
     </div>
     <div class="form-group" *ngIf="editing">
-        <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#modalMensajeBorrarComplejo">
+        <button type="button" class="btn btn-outline-danger btn-lg btn-block" data-toggle="modal" data-target="#modalMensajeBorrarComplejo">
           Borrar Complejo
         </button>
     </div>
@@ -78,7 +76,7 @@
         </button>
       </div>
       <div class="modal-body">
-          Estas a punto de borrar un complejo, esta acción no puede ser revertida. ¿Deseas continuar?
+          Estas a punto de borrar un COMPLEJO, se BORRARAN todas las HABITACIONES relacionadas, esta acción no puede ser revertida. ¿Deseas continuar?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
