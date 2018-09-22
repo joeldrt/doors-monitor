@@ -41,6 +41,7 @@
       <label for="tipoHabitacion1">Tipo de Habitación</label>
       <select class="form-control" id="tipoHabitacion1"
         [(ngModel)]="habitacion.tipo" name="tipo_habitacion_selec" [disabled]="!editing">
+        <option value="undefined" selected="true"></option>
         <option *ngFor="let tipo of tipos_keys(); trackBy: customTrackBy" [ngValue]="tipo">
           <span [ngClass]="tipos_habitacion.get(tipo)"></span>
           {{tipo}}
@@ -112,7 +113,7 @@
             <label for="sensorVincular1">Sensor</label>
             <select class="form-control" id="sensorVincular1"
               [(ngModel)]="sensor_a_vincular" name="sensor_vincular">
-              <option *ngIf="sensores_sin_vincular.length == 1" value="undefined" selected="true"></option>
+              <option value="undefined" selected="true"></option>
               <option *ngFor="let sensor of sensores_sin_vincular" [ngValue]="sensor">
                 {{sensor.nombre}}
               </option>

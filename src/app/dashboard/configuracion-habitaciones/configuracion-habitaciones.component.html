@@ -59,6 +59,7 @@
               <label for="complejo1">Complejo</label>
               <select class="form-control" id="complejo1"
                 [(ngModel)]="complejo_seleccionado" name="complejo_select">
+                <option value="undefined" selected="true"></option>
                 <option *ngFor="let complejo of complejos" [ngValue]="complejo">
                   {{complejo.nombre}}
                 </option>

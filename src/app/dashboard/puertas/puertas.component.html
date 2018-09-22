@@ -14,7 +14,7 @@
         <div class="form-group mr-4" *ngIf="complejos && complejos.length > 0">
           <label for="complejo" class="mr-2">Complejo</label>
           <select name="complejo_seleccionado" (change)="complejoChange($event.target.value)" id="complejo">
-            <option value="">------------</option>
+            <option value="undefined"></option>
             <option *ngFor="let complejo of complejos" [value]="complejo" >{{complejo}}</option>
           </select>
         </div>

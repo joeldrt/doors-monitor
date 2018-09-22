@@ -52,7 +52,7 @@
             <label for="dispositivoId1">Dispositivo Id</label>
             <select class="form-control" id="dispositivoId1"
               [(ngModel)]="sensor_nuevo.dispositivo_id" name="dispositivo_selec">
-              <option *ngIf="dispositivos_sin_registrar.length == 1" value="undefined" selected="true"> </option>
+              <option value="undefined" selected="true"></option>
               <option *ngFor="let dispositivo of dispositivos_sin_registrar" [ngValue]="dispositivo">
                 {{dispositivo}}
               </option>
@@ -70,6 +70,7 @@
             <label for="tipoSensor1">Tipo de Sensor</label>
             <select class="form-control" id="tipoSensor1"
               [(ngModel)]="sensor_nuevo.tipo_sensor" name="sensor_nuevo_tipo">
+              <option value="undefined" selected="true"></option>
               <option *ngFor="let tipo_sensor of tipos_keys(); trackBy: customTrackBy" [ngValue]="tipo_sensor">
                 {{tipo_sensor}}
               </option>
