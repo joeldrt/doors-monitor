@@ -10,6 +10,9 @@ import { HabitacionesService } from '../../_services/habitaciones.service';
 import { Complejo } from '../../_models/complejo';
 import { ComplejoService } from '../../_services/complejo.service';
 
+import { Sensor, TIPOS_SENSORES } from '../../_models/sensor';
+import { SensoresService } from './../../_services/sensores.service';
+
 @Component({
   selector: 'app-configuracion-habitaciones-detalle',
   templateUrl: './configuracion-habitaciones-detalle.component.html',
@@ -24,12 +27,19 @@ export class ConfiguracionHabitacionesDetalleComponent implements OnInit {
   complejo: Complejo;
   tipos_habitacion = TIPOS_HABITACION;
 
+  tipos_sensores = TIPOS_SENSORES;
+  sensores_habitacion: Sensor[];
+
+  sensor_a_vincular: Sensor;
+  sensores_sin_vincular: Sensor[];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private toaster: ToastrService,
     private habitacionesService: HabitacionesService,
-    private complejoService: ComplejoService
+    private complejoService: ComplejoService,
+    private sensoresService: SensoresService
   ) { }
 
   ngOnInit() {
@@ -39,7 +49,9 @@ export class ConfiguracionHabitacionesDetalleComponent implements OnInit {
       this.router.navigate(['/configuracion/habitaciones']);
       return;
     }
+    this.sensor_a_vincular = new Sensor();
     this.obtenerDetalleHabitacion();
+    this.obtenerSensoresSinVincular();
   }
 
   obtenerDetalleHabitacion() {
@@ -49,6 +61,7 @@ export class ConfiguracionHabitacionesDetalleComponent implements OnInit {
         this.habitacion = response.body;
         this.loading = false;
         this.obtenerComplejo();
+        this.obtenerSensoresPorHabitacion();
       },
       (error: HttpErrorResponse) => {
         this.loading = false;
@@ -102,6 +115,81 @@ export class ConfiguracionHabitacionesDetalleComponent implements OnInit {
   tipos_keys(): string[] {
     const keys = Array.from(this.tipos_habitacion.keys());
     return keys;
+  }
+
+  obtenerSensoresPorHabitacion() {
+    this.loading = true;
+    this.sensoresService.obtenerSensoresPorHabitacion(this.habitacion_id).subscribe(
+      (response: HttpResponse<Sensor[]>) => {
+        this.loading = false;
+        this.sensores_habitacion = response.body;
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        this.toaster.error(error.status + ' error: ' + error.error.message);
+      }
+    );
+  }
+
+  obtenerSensoresSinVincular() {
+    this.loading = true;
+    this.sensoresService.obtenerSensoresSinvincular().subscribe(
+      (response: HttpResponse<Sensor[]>) => {
+        this.loading = false;
+        this.sensores_sin_vincular = response.body;
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        this.toaster.error(error.status + ' error: ' + error.error.message);
+      }
+    );
+  }
+
+  vincularSensor() {
+    this.loading = true;
+    this.sensor_a_vincular.habitacion_id = this.habitacion_id;
+    this.sensoresService.editarSensor(this.sensor_a_vincular.id, this.sensor_a_vincular).subscribe(
+      (response: HttpResponse<Sensor>) => {
+        this.loading = false;
+        this.sensor_a_vincular = new Sensor();
+        this.obtenerSensoresPorHabitacion();
+        this.obtenerSensoresSinVincular();
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        this.toaster.error(error.status + ' error: ' + error.error.message);
+      }
+    );
+  }
+
+  desvincularSensor(sensor: Sensor) {
+    this.loading = true;
+    sensor.habitacion_id = undefined;
+    this.sensoresService.editarSensor(sensor.id, sensor).subscribe(
+      (response: HttpResponse<Sensor>) => {
+        this.loading = false;
+        this.obtenerSensoresPorHabitacion();
+        this.obtenerSensoresSinVincular();
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        this.toaster.error(error.status + ' error: ' + error.error.message);
+      }
+    );
+  }
+
+  borrarHabitacion() {
+    this.loading = true;
+    this.habitacionesService.borrarHabitacion(this.habitacion_id).subscribe(
+      (response: HttpResponse<any>) => {
+        this.loading = false;
+        this.router.navigate(['/configuracion/habitaciones']);
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        this.toaster.error(error.status + ' error: ' + error.error.message);
+      }
+    );
   }
 
 }

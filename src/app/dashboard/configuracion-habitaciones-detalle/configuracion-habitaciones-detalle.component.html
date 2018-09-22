@@ -57,5 +57,100 @@
           [(ngModel)]="habitacion.precio_base" name="precio_base" [disabled]="!editing">
       </div>
     </div>
+    <div class="form-group">
+      <div style="width: 100%" class="mb-3 mt-5">
+        <label>Sensores</label>
+        <div class="pull-right">
+          <button type="button" class="btn btn-link" *ngIf="editing" data-toggle="modal" data-target="#modalVincularSensorHabitacion">
+              <span class="fas fa-plus"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!sensores_habitacion || sensores_habitacion.length <= 0" class="alert alert-dark">
+      Aun no cuenta con sensores vinculados
+    </div>
+    <div *ngIf="sensores_habitacion && sensores_habitacion.length > 0">
+      <div class="form-group" *ngFor="let sensor of sensores_habitacion">
+        <button type="button" class="btn btn-link">
+            <span [ngClass]="tipos_sensores.get(sensor.tipo_sensor)"></span>
+            {{sensor.nombre}}
+        </button>
+        <div class="pull-right">
+          <button type="button" class="btn btn-danger" *ngIf="editing" (click)="desvincularSensor(sensor)">
+            <span class="fas fa-minus-circle"></span>
+          </button>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="sensores_habitacion.length > 1 && editing">
+        <button type="button" class="btn btn-outline-primary btn-lg btn-block" data-toggle="modal" data-target="#modalMensajeBorrarHabitacion">
+          Regla Sensor Doble
+        </button>
+      </div>
+    </div>
+    <div class="form-group mt-5" *ngIf="editing">
+      <button type="button" class="btn btn-outline-danger btn-lg btn-block" data-toggle="modal" data-target="#modalMensajeBorrarHabitacion">
+        Borrar Habitacion
+      </button>
+    </div>
   </form>
 </div>
+
+<!-- Ventana modal vincular sensor con habitacion -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalVincularSensorHabitacion" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Vincular Sensor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-Label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="sensores_sin_vincular && sensores_sin_vincular.length > 0">
+          <div class="form-group">
+            <label for="sensorVincular1">Sensor</label>
+            <select class="form-control" id="sensorVincular1"
+              [(ngModel)]="sensor_a_vincular" name="sensor_vincular">
+              <option *ngIf="sensores_sin_vincular.length == 1" value="undefined" selected="true"></option>
+              <option *ngFor="let sensor of sensores_sin_vincular" [ngValue]="sensor">
+                {{sensor.nombre}}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"
+          [disabled]="!sensor_a_vincular || !sensor_a_vincular.id"
+          (click)="vincularSensor()">Vincular</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin ventana modal vincular sensor con habitacion -->
+
+<!-- Ventana modal mensaje para borrar complejo-->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalMensajeBorrarHabitacion" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Borrar Habitación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          Estas a punto de borrar una HABITACIÓN, se DESVINCULARAN los SENSORES relacionadas, esta acción no puede ser revertida. ¿Deseas continuar?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="borrarHabitacion()">
+          Continuar Borrado
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin ventana modal mensaje para borrar complejo-->

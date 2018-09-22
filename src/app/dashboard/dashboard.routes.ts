@@ -8,6 +8,8 @@ import { ConfiguracionHabitacionesComponent } from './configuracion-habitaciones
 import {
   ConfiguracionHabitacionesDetalleComponent
 } from './configuracion-habitaciones-detalle/configuracion-habitaciones-detalle.component';
+import { ConfiguracionSensoresComponent } from './configuracion-sensores/configuracion-sensores.component';
+import { ConfiguracionSensoresDetalleComponent } from './configuracion-sensores-detalle/configuracion-sensores-detalle.component';
 
 
 export const DASHBOARD_ROUTES: Routes = [
@@ -18,5 +20,7 @@ export const DASHBOARD_ROUTES: Routes = [
   {path: 'configuracion/complejos', component: ConfiguracionComplejosComponent},
   {path: 'configuracion/complejos/:complejo_id', component: ConfiguracionComplejosDetalleComponent},
   {path: 'configuracion/habitaciones', component: ConfiguracionHabitacionesComponent},
-  {path: 'configuracion/habitaciones/:habitacion_id', component: ConfiguracionHabitacionesDetalleComponent}
+  {path: 'configuracion/habitaciones/:habitacion_id', component: ConfiguracionHabitacionesDetalleComponent},
+  {path: 'configuracion/sensores', component: ConfiguracionSensoresComponent},
+  {path: 'configuracion/sensores/:sensor_id', component: ConfiguracionSensoresDetalleComponent},
 ];

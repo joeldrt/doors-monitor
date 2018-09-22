@@ -1,0 +1,88 @@
+<div class="dashboard-dg-nav">
+  <div class="left-place">
+      <h5>
+        <button type="button" class="btn btn-link mr-auto" routerLink="/configuracion">
+          <span class="fas fa-chevron-left"></span>
+        </button>
+      </h5>
+  </div>
+  <div class="center-place">
+    <h5>
+      <span class="fas fa-microchip d-none d-lg-block"></span>
+      Sensores
+    </h5>
+  </div>
+  <div class="right-place">
+    <div class="pull-right">
+      <!-- boton agregar habitacion -->
+      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#agregarSensorModal">
+        <span class="fas fa-plus"></span>
+      </button>
+      <!-- final boton agregar habitacion -->
+    </div>
+  </div>
+</div>
+<div class="dashboard-dg-content">
+  <div *ngIf="!sensores || sensores.length <= 0" class="alert alert-dark">
+    No tiene sensores registrados
+  </div>
+  <div *ngIf="sensores && sensores.length > 0">
+    <div class="card mb-3" *ngFor="let sensor of sensores">
+      <button class="btn btn-link" [routerLink]="['/configuracion/sensores', sensor.id]">
+        <span [ngClass]="tipos_sensores.get(sensor.tipo_sensor)"></span>
+        {{sensor.nombre}}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Ventana modal para agregar un sensor-->
+<div class="modal fade" tabindex="-1" role="dialog" id="agregarSensorModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Sensor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-Label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="sensor_nuevo && dispositivos_sin_registrar && dispositivos_sin_registrar.length > 0">
+          <div class="form-group">
+            <label for="dispositivoId1">Dispositivo Id</label>
+            <select class="form-control" id="dispositivoId1"
+              [(ngModel)]="sensor_nuevo.dispositivo_id" name="dispositivo_selec">
+              <option *ngIf="dispositivos_sin_registrar.length == 1" value="undefined" selected="true"> </option>
+              <option *ngFor="let dispositivo of dispositivos_sin_registrar" [ngValue]="dispositivo">
+                {{dispositivo}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sensorNuevoNombre1">
+              <span *ngIf="sensor_nuevo.tipo_sensor" [ngClass]="tipos_sensores.get(sensor_nuevo.tipo_sensor)"></span>
+              Nombre
+            </label>
+            <input type="text" class="form-control"
+              [(ngModel)]="sensor_nuevo.nombre" id="sensorNuevoNombre1" name="sensor_nuevo_nombre">
+          </div>
+          <div class="form-group">
+            <label for="tipoSensor1">Tipo de Sensor</label>
+            <select class="form-control" id="tipoSensor1"
+              [(ngModel)]="sensor_nuevo.tipo_sensor" name="sensor_nuevo_tipo">
+              <option *ngFor="let tipo_sensor of tipos_keys(); trackBy: customTrackBy" [ngValue]="tipo_sensor">
+                {{tipo_sensor}}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"
+          [disabled]="!sensor_nuevo.dispositivo_id || !sensor_nuevo.nombre || !sensor_nuevo.tipo_sensor"
+          (click)="agregarSensorNuevo()">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>

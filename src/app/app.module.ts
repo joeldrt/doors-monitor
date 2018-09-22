@@ -15,6 +15,7 @@ import { AuthGuard } from './_guard/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { ComplejoService } from './_services/complejo.service';
 import { HabitacionesService } from './_services/habitaciones.service';
+import { SensoresService } from './_services/sensores.service';
 
 // Toaster module
 import { ToastrModule } from 'ngx-toastr';
@@ -39,6 +40,8 @@ import { ConfiguracionHabitacionesComponent } from './dashboard/configuracion-ha
 import {
   ConfiguracionHabitacionesDetalleComponent
 } from './dashboard/configuracion-habitaciones-detalle/configuracion-habitaciones-detalle.component';
+import { ConfiguracionSensoresComponent } from './dashboard/configuracion-sensores/configuracion-sensores.component';
+import { ConfiguracionSensoresDetalleComponent } from './dashboard/configuracion-sensores-detalle/configuracion-sensores-detalle.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,9 @@ import {
     ConfiguracionComplejosComponent,
     ConfiguracionComplejosDetalleComponent,
     ConfiguracionHabitacionesComponent,
-    ConfiguracionHabitacionesDetalleComponent
+    ConfiguracionHabitacionesDetalleComponent,
+    ConfiguracionSensoresComponent,
+    ConfiguracionSensoresDetalleComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +83,8 @@ import {
       multi: true
     },
     ComplejoService,
-    HabitacionesService
+    HabitacionesService,
+    SensoresService
   ],
   bootstrap: [AppComponent]
 })

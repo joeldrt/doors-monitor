@@ -1,0 +1,82 @@
+<div class="dashboard-dg-nav">
+  <div class="left-place">
+    <h5>
+      <button type="button" class="btn btn-link mr-auto" routerLink="/configuracion/sensores">
+          <span class="fas fa-chevron-left"></span>
+      </button>
+    </h5>
+  </div>
+  <div class="center-place">
+    <div *ngIf="sensor">
+        <div *ngIf="sensor && sensor.tipo_sensor">
+          <span [ngClass]="tipos_sensores.get(sensor.tipo_sensor)"></span>
+        </div>
+        {{sensor.nombre}}
+    </div>
+  </div>
+  <div class="right-place">
+    <div class="pull-right">
+        <button type="button" class="btn btn-link" *ngIf="!editing" (click)="ponerModoEdicion()">
+            editar
+        </button>
+        <button type="button" class="btn btn-link" *ngIf="editing" (click)="editarSensor()">
+            guardar
+        </button>
+    </div>
+  </div>
+</div>
+<div class="dashboard-dg-content">
+  <form *ngIf="sensor">
+    <div class="form-group">
+      <label for="dispositivoId1">Dispositivo Id</label>
+      <input type="text" class="form-control"
+        [(ngModel)]="sensor.dispositivo_id" id="dispositivoId1" name="dispositivo_id" disabled="true">
+    </div>
+    <div class="form-group">
+      <label for="sensorNombre1">
+        <span *ngIf="sensor.tipo_sensor" [ngClass]="tipos_sensores.get(sensor.tipo_sensor)"></span>
+        Nombre
+      </label>
+      <input type="text" class="form-control"
+        [(ngModel)]="sensor.nombre" id="sensorNombre1" name="sensor_nombre" [disabled]="!editing">
+    </div>
+    <div class="form-group">
+      <label for="tipoSensor1">Tipo de Sensor</label>
+      <select class="form-control" id="tipoSensor1"
+        [(ngModel)]="sensor.tipo_sensor" name="sensor_nuevo_tipo" [disabled]="!editing">
+        <option *ngFor="let tipo_sensor of tipos_keys(); trackBy: customTrackBy" [ngValue]="tipo_sensor">
+          {{tipo_sensor}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group" *ngIf="editing">
+      <button type="button" class="btn btn-outline-danger btn-lg btn-block" data-toggle="modal" data-target="#modalMensajeBorrarSensor">
+        Borrar Sensor
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Ventana modal mensaje para borrar sensor-->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalMensajeBorrarSensor" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Borrar Sensor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          Estas a punto de borrar un Sensor, esta acción no puede ser revertida. ¿Deseas continuar?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="borrarSensor()">
+          Continuar Borrado
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin ventana modal mensaje para borrar sensor-->

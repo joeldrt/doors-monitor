@@ -11,15 +11,19 @@ import { Sensor } from './../_models/sensor';
 @Injectable()
 export class SensoresService {
   private API_URL: string;
-  private API_URL_sin_registrar: string;
+  private API_URL_dispositivos_sin_registrar: string;
   private API_URL_batch: string;
+  private API_URL_sensores_sin_vincular: string;
+  private API_URL_sensores_por_habitacion: string;
 
   constructor(
     private http: HttpClient
   ) {
     this.API_URL = environment.API_URL + '/api/app/user/sensores';
-    this.API_URL_sin_registrar = environment.API_URL + '/api/app/user/dispositivos_sin_registrar';
+    this.API_URL_dispositivos_sin_registrar = environment.API_URL + '/api/app/user/dispositivos_sin_registrar';
     this.API_URL_batch = environment.API_URL + '/api/app/user/sensores_batch';
+    this.API_URL_sensores_sin_vincular = environment.API_URL + '/api/app/user/sensores_sin_vincular';
+    this.API_URL_sensores_por_habitacion = environment.API_URL + '/api/app/user/sensores_por_habitacion';
   }
 
   guardarSensor(sensor: Sensor): Observable<HttpResponse<Sensor>> {
@@ -49,7 +53,15 @@ export class SensoresService {
   }
 
   obtenerDispositivosSinRegistrar(): Observable<HttpResponse<string[]>> {
-    return this.http.get<string[]>(this.API_URL_sin_registrar, {observe: 'response'});
+    return this.http.get<string[]>(this.API_URL_dispositivos_sin_registrar, {observe: 'response'});
+  }
+
+  obtenerSensoresSinvincular(): Observable<HttpResponse<Sensor[]>> {
+    return this.http.get<Sensor[]>(this.API_URL_sensores_sin_vincular, {observe: 'response'});
+  }
+
+  obtenerSensoresPorHabitacion(habitacion_id: string): Observable<HttpResponse<Sensor[]>> {
+    return this.http.get<Sensor[]>(this.API_URL_sensores_por_habitacion + '/' + habitacion_id, {observe: 'response'});
   }
 
 }
