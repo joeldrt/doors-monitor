@@ -12,8 +12,6 @@ export class Habitacion {
   public nombre?: string;
   public tipo?: string;
   public precio_base?: number;
-  public usa_servicio_doble?: boolean;
-  public dispositivos_ids_servicio_doble?: string[];
   public hora_extra?: number;
   public persona_extra?: number;
 }

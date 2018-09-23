@@ -15,6 +15,8 @@ export class SensoresService {
   private API_URL_batch: string;
   private API_URL_sensores_sin_vincular: string;
   private API_URL_sensores_por_habitacion: string;
+  private API_URL_agregar_sensor_a_lista_servicio: string;
+  private API_URL_quitar_sensor_de_lista_servicio: string;
 
   constructor(
     private http: HttpClient
@@ -24,6 +26,8 @@ export class SensoresService {
     this.API_URL_batch = environment.API_URL + '/api/app/user/sensores_batch';
     this.API_URL_sensores_sin_vincular = environment.API_URL + '/api/app/user/sensores_sin_vincular';
     this.API_URL_sensores_por_habitacion = environment.API_URL + '/api/app/user/sensores_por_habitacion';
+    this.API_URL_agregar_sensor_a_lista_servicio = environment.API_URL + '/api/app/user/sensor_agregar_servicio';
+    this.API_URL_quitar_sensor_de_lista_servicio = environment.API_URL + '/api/app/user/sensor_quitar_servicio';
   }
 
   guardarSensor(sensor: Sensor): Observable<HttpResponse<Sensor>> {
@@ -62,6 +66,14 @@ export class SensoresService {
 
   obtenerSensoresPorHabitacion(habitacion_id: string): Observable<HttpResponse<Sensor[]>> {
     return this.http.get<Sensor[]>(this.API_URL_sensores_por_habitacion + '/' + habitacion_id, {observe: 'response'});
+  }
+
+  agregarSensorListaServicio(sensor_id: string): Observable<HttpResponse<any>> {
+    return this.http.put<any>(this.API_URL_agregar_sensor_a_lista_servicio + '/' + sensor_id, null, {observe: 'response'});
+  }
+
+  removerSensorListaServicio(sensor_id: string): Observable<HttpResponse<any>> {
+    return this.http.put<any>(this.API_URL_quitar_sensor_de_lista_servicio + '/' + sensor_id, null, {observe: 'response'});
   }
 
 }

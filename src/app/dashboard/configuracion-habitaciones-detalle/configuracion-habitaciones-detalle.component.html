@@ -73,7 +73,13 @@
     </div>
     <div *ngIf="sensores_habitacion && sensores_habitacion.length > 0">
       <div class="form-group" *ngFor="let sensor of sensores_habitacion">
-        <button type="button" class="btn btn-link">
+        <button *ngIf="!sensor.contribuye_servicio"
+            type="button" class="btn btn-link" (click)="seleccionarSensor(sensor)" data-toggle="modal" data-target="#modalSensorAgregarAServicio">
+            <span [ngClass]="tipos_sensores.get(sensor.tipo_sensor)"></span>
+            {{sensor.nombre}}
+        </button>
+        <button *ngIf="sensor.contribuye_servicio"
+            type="button" class="btn btn-link text-success" (click)="seleccionarSensor(sensor)" data-toggle="modal" data-target="#modalSensorAgregarAServicio">
             <span [ngClass]="tipos_sensores.get(sensor.tipo_sensor)"></span>
             {{sensor.nombre}}
         </button>
@@ -82,11 +88,6 @@
             <span class="fas fa-minus-circle"></span>
           </button>
         </div>
-      </div>
-      <div class="form-group" *ngIf="sensores_habitacion.length > 1 && editing">
-        <button type="button" class="btn btn-outline-primary btn-lg btn-block" data-toggle="modal" data-target="#modalMensajeBorrarHabitacion">
-          Regla Sensor Doble
-        </button>
       </div>
     </div>
     <div class="form-group mt-5" *ngIf="editing">
@@ -155,3 +156,30 @@
   </div>
 </div>
 <!-- Fin ventana modal mensaje para borrar complejo-->
+
+
+<!-- Ventana modal sensor para agregarlo a servicio -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modalSensorAgregarAServicio" aria-hidden="true">
+  <div class="modal-dialog" role="document" *ngIf="sensor_candidato_a_servicio">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sensor De Servicio</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-Label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Los sensores de servicio son los responsables de determinar cuando inicia o finaliza un servicio. ¿Deseas agregar o quitar
+        {{sensor_candidato_a_servicio.nombre}} a esta lista de dispositivos?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" *ngIf="!sensor_candidato_a_servicio.contribuye_servicio"
+          (click)="agregarSensorListaServicio()">Agregar</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" *ngIf="sensor_candidato_a_servicio.contribuye_servicio"
+          (click)="quitarSensorListaServicio()">Quitar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin ventana modal sensor para agregarlo a servicio -->

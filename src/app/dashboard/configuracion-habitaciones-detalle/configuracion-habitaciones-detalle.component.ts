@@ -33,6 +33,8 @@ export class ConfiguracionHabitacionesDetalleComponent implements OnInit {
   sensor_a_vincular: Sensor;
   sensores_sin_vincular: Sensor[];
 
+  sensor_candidato_a_servicio: Sensor;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -165,6 +167,7 @@ export class ConfiguracionHabitacionesDetalleComponent implements OnInit {
   desvincularSensor(sensor: Sensor) {
     this.loading = true;
     sensor.habitacion_id = undefined;
+    sensor.contribuye_servicio = false;
     this.sensoresService.editarSensor(sensor.id, sensor).subscribe(
       (response: HttpResponse<Sensor>) => {
         this.loading = false;
@@ -184,6 +187,42 @@ export class ConfiguracionHabitacionesDetalleComponent implements OnInit {
       (response: HttpResponse<any>) => {
         this.loading = false;
         this.router.navigate(['/configuracion/habitaciones']);
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        this.toaster.error(error.status + ' error: ' + error.error.message);
+      }
+    );
+  }
+
+  seleccionarSensor(sensor: Sensor) {
+    this.sensor_candidato_a_servicio = sensor;
+  }
+
+  agregarSensorListaServicio() {
+    if (!this.sensor_candidato_a_servicio) {
+      return;
+    }
+    this.sensoresService.agregarSensorListaServicio(this.sensor_candidato_a_servicio.id).subscribe(
+      (response: HttpResponse<any>) => {
+        this.loading = false;
+        this.obtenerSensoresPorHabitacion();
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        this.toaster.error(error.status + ' error: ' + error.error.message);
+      }
+    );
+  }
+
+  quitarSensorListaServicio() {
+    if (!this.sensor_candidato_a_servicio) {
+      return;
+    }
+    this.sensoresService.removerSensorListaServicio(this.sensor_candidato_a_servicio.id).subscribe(
+      (response: HttpResponse<any>) => {
+        this.loading = false;
+        this.obtenerSensoresPorHabitacion();
       },
       (error: HttpErrorResponse) => {
         this.loading = false;
