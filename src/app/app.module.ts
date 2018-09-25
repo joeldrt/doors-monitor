@@ -29,7 +29,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ResumenComponent } from './dashboard/resumen/resumen.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { WelcomeComponent } from './landing-page/welcome/welcome.component';
-import { PuertasComponent } from './dashboard/puertas/puertas.component';
 import { LoginComponent } from './landing-page/login/login.component';
 import { ConfiguracionComponent } from './dashboard/configuracion/configuracion.component';
 import { ConfiguracionComplejosComponent } from './dashboard/configuracion-complejos/configuracion-complejos.component';
@@ -50,7 +49,6 @@ import { ConfiguracionSensoresDetalleComponent } from './dashboard/configuracion
     ResumenComponent,
     LandingPageComponent,
     WelcomeComponent,
-    PuertasComponent,
     LoginComponent,
     ConfiguracionComponent,
     ConfiguracionComplejosComponent,
