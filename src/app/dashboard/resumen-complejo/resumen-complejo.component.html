@@ -1,3 +1,68 @@
-<p>
-  resumen-complejo works!
-</p>
+<div class="dashboard-dg-nav">
+  <div class="left-place">
+    <h5>
+      <button type="button" class="btn btn-link mr-auto" routerLink="/resumen">
+        <span class="fas fa-chevron-left"></span>
+      </button>
+    </h5>
+  </div>
+  <div class="center-place">
+    <div class="d-none d-md-block"> <!-- fecha para displays grandes -->
+      <h5>
+        <span class="fas fa-chart-line d-none d-lg-block"></span>
+        {{HOY | date: 'fullDate'}}
+        <!-- Lunes 24 de Septiembre de 2018 -->
+      </h5>
+    </div>
+    <div class="d-block d-md-none"> <!-- fecha para displays medianos y pequeños -->
+      <h5>
+        {{HOY | date: 'shortDate'}}
+        <!-- 24/09/2018 -->
+      </h5>
+    </div>
+  </div>
+  <div class="right-place">
+    <div class="pull-right">
+      <button type="button" class="btn btn-link" (click)="actualizarElNumeroDeServicios()">
+        <span class="fas fa-sync-alt"></span>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="dashboard-dg-content" *ngIf="complejo">
+  <div style="display: block;">
+    <h5>Complejo: {{complejo.nombre}}</h5>
+  </div>
+  <div style="display: block;">
+    <div style="position: relative; margin-left: auto; margin-right: auto; display: table">
+      <h1>{{total_servicios}}</h1>
+      <span class="badge badge-success" style="position: absolute; bottom: 0; right: -60px;">servicios</span>
+    </div>
+  </div>
+  <div style="display: block; margin-top: 20px">
+    <div style="position: relative; margin-left: auto; margin-right: auto; display: table">
+      <h1>${{ganancia_total}}</h1>
+    </div>
+  </div>
+  <div style="display: block; margin-top: 20px">
+    <h5>
+      Habitaciones
+    </h5>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-6 col-md-4 col-lg-3" *ngFor="let habitacion of habitaciones">
+        <div style="display: block">
+          <div style="margin-top: 20px; margin-left: auto; margin-right: auto; display: table; position: relative;"
+            [ngStyle]="{'color': getColor(estado_de_habitacion.get(habitacion.id))}">
+              <span class="fa-2x" [ngClass]="tipos_habitacion.get(habitacion.tipo)"></span>
+              <span class="badge badge-success" style="position: absolute; top: -12px; right: -12px;">{{servicios_por_habitacion.get(habitacion.id)}}</span>
+          </div>
+          <div style="margin-top: 10px; margin-left: auto; margin-right: auto; display: table;">
+            {{habitacion.nombre}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
