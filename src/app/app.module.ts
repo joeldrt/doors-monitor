@@ -42,6 +42,7 @@ import {
 } from './dashboard/configuracion-habitaciones-detalle/configuracion-habitaciones-detalle.component';
 import { ConfiguracionSensoresComponent } from './dashboard/configuracion-sensores/configuracion-sensores.component';
 import { ConfiguracionSensoresDetalleComponent } from './dashboard/configuracion-sensores-detalle/configuracion-sensores-detalle.component';
+import { ResumenComplejoComponent } from './dashboard/resumen-complejo/resumen-complejo.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ConfiguracionSensoresDetalleComponent } from './dashboard/configuracion
     ConfiguracionHabitacionesComponent,
     ConfiguracionHabitacionesDetalleComponent,
     ConfiguracionSensoresComponent,
-    ConfiguracionSensoresDetalleComponent
+    ConfiguracionSensoresDetalleComponent,
+    ResumenComplejoComponent
   ],
   imports: [
     BrowserModule,
