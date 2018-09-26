@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 // Base URL
@@ -12,12 +12,14 @@ import { Habitacion } from './../_models/habitacion';
 export class HabitacionesService {
   private API_URL: string;
   private API_URLxComplejo: string;
+  private API_URL_Servicios: string;
 
   constructor(
     private http: HttpClient
   ) {
     this.API_URL = environment.API_URL + '/api/app/user/habitaciones';
     this.API_URLxComplejo = environment.API_URL + '/api/app/user/habitaciones_complejo';
+    this.API_URL_Servicios = environment.API_URL + '/api/app/user/habitaciones_servicios';
   }
 
   guardarHabitacion(habitacion: Habitacion): Observable<HttpResponse<Habitacion>> {
@@ -42,6 +44,14 @@ export class HabitacionesService {
 
   borrarHabitacion(habitacion_id: string): Observable<HttpResponse<any>> {
     return this.http.delete<any>(this.API_URL + '/' + habitacion_id, {observe: 'response'});
+  }
+
+  obtenerServiciosPorHabitacionEntreFechas(habitacion_id: string, fecha_inicial: string, fecha_final: string):
+  Observable<HttpResponse<any>> {
+    const parametros = new HttpParams()
+      .set('fecha_inicial', fecha_inicial)
+      .set('fecha_final', fecha_final);
+    return this.http.get<HttpResponse<any>>(this.API_URL_Servicios + '/' + habitacion_id, {params: parametros, observe: 'response'});
   }
 
 }

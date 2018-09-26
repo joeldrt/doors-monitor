@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
@@ -80,6 +81,7 @@ import { ConfiguracionSensoresDetalleComponent } from './dashboard/configuracion
       useClass: JwtInterceptor,
       multi: true
     },
+    DatePipe,
     ComplejoService,
     HabitacionesService,
     SensoresService
