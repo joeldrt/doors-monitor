@@ -12,6 +12,11 @@
   padding-left: 0px !important;
 }
 
+.row {
+  margin-right: none !important;
+  margin-left: none !important
+}
+
 .dashboard-dg-nav {
   padding-right: 15px;
   padding-left: 15px;
