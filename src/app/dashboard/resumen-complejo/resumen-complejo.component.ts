@@ -102,7 +102,11 @@ export class ResumenComplejoComponent implements OnInit {
           this.servicios_por_habitacion.set(habitacion.id, response.body.numero_servicios);
           this.estado_de_habitacion.set(habitacion.id, response.body.ultimo_status);
           this.total_servicios = this.total_servicios + response.body.numero_servicios;
-          this.ganancia_total = this.ganancia_total + (response.body.numero_servicios * habitacion.precio_base);
+          let ganancia_por_habitacion = 0;
+          if (habitacion.precio_base) {
+            ganancia_por_habitacion = response.body.numero_servicios * habitacion.precio_base;
+          }
+          this.ganancia_total = this.ganancia_total + ganancia_por_habitacion;
         },
         (error: HttpErrorResponse) => {
           this.toaster.error(error.status + ' error: ' + error.error.message);

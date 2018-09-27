@@ -133,7 +133,11 @@ export class ResumenHabitacionComponent implements OnInit {
       (response: HttpResponse<any>) => {
         this.total_servicios = response.body.numero_servicios;
         this.estado_de_habitacion = response.body.ultimo_status;
-        this.ganancia_total = response.body.numero_servicios * this.habitacion.precio_base;
+        if (this.habitacion.precio_base) {
+          this.ganancia_total = response.body.numero_servicios * this.habitacion.precio_base;
+        } else {
+          this.ganancia_total = 0;
+        }
         this.obtenerRegistrosPorHabitacion();
       },
       (error: HttpErrorResponse) => {
