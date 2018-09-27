@@ -10,6 +10,8 @@ import { Habitacion, TIPOS_HABITACION } from '../../_models/habitacion';
 import { HabitacionesService } from '../../_services/habitaciones.service';
 
 import { Registro } from '../../_models/registro';
+import { Sensor, TIPOS_SENSORES } from '../../_models/sensor';
+import { SensoresService } from '../../_services/sensores.service';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -26,7 +28,6 @@ export class ResumenHabitacionComponent implements OnInit {
   FECHA_FINAL = this.HOY_SERVICIO;
   tipos_habitacion = TIPOS_HABITACION;
 
-  loading = false;
   complejo_id: string;
   complejo: Complejo;
   habitacion_id: string;
@@ -36,17 +37,22 @@ export class ResumenHabitacionComponent implements OnInit {
   estado_de_habitacion: string;
   ganancia_total = 0;
 
+  sensores_habitacion: Sensor[];
+  dispositivo_id_sensor_nombre: Map<string, string>;
+  dispositivo_id_sensor_tipo: Map<string, string>;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private complejoService: ComplejoService,
     private habitacionesService: HabitacionesService,
+    private sensoresService: SensoresService,
     private toaster: ToastrService,
     private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
-    this.HOY_SERVICIO = this.datePipe.transform(this.HOY, 'yyyy-MM-dd');
+    this.HOY_SERVICIO = this.datePipe.transform(this.HOY, 'yyyy-MM-dd'); // '2018-09-26';
     this.FECHA_INICIAL = this.HOY_SERVICIO;
     this.FECHA_FINAL = this.HOY_SERVICIO;
     this.complejo_id = this.route.snapshot.params['complejo_id'];
@@ -62,47 +68,64 @@ export class ResumenHabitacionComponent implements OnInit {
       return;
     }
     this.inicializarMapas();
+    this.cargarSensores();
     this.cargarComplejo();
     this.cargarHabitacion();
   }
 
   inicializarMapas() {
-    this.complejo = new Complejo();
-    this.habitacion = new Habitacion();
+    this.complejo = undefined;
+    this.habitacion = undefined;
     this.total_servicios = 0;
     this.estado_de_habitacion = 'Desconocido';
     this.ganancia_total = 0;
   }
 
   cargarComplejo() {
-    this.loading = true;
     this.complejoService.obtenerComplejo(this.complejo_id).subscribe(
       (response: HttpResponse<Complejo>) => {
         this.complejo = response.body;
-        this.loading = false;
       },
       (error: HttpErrorResponse) => {
         this.toaster.error(error.status + ' error: ' + error.error.message);
         console.log(error);
-        this.loading = false;
       }
     );
   }
 
   cargarHabitacion() {
-    this.loading = true;
     this.habitacionesService.obtenerHabitacion(this.habitacion_id).subscribe(
       (response: HttpResponse<Complejo>) => {
         this.habitacion = response.body;
-        this.loading = false;
         this.obtenerServiciosPorHabitacion();
       },
       (error: HttpErrorResponse) => {
         this.toaster.error(error.status + ' error: ' + error.error.message);
         console.log(error);
-        this.loading = false;
       }
     );
+  }
+
+  cargarSensores() {
+    this.dispositivo_id_sensor_nombre = new Map<string, string>();
+    this.dispositivo_id_sensor_tipo = new Map<string, string>();
+    this.sensoresService.obtenerSensoresPorHabitacion(this.habitacion_id).subscribe(
+      (response: HttpResponse<Sensor[]>) => {
+        this.sensores_habitacion = response.body;
+        this.mapearInfoSensores();
+      },
+      (error: HttpErrorResponse) => {
+        this.toaster.error(error.status + ' error: ' + error.error.message);
+        console.log(error);
+      }
+    );
+  }
+
+  mapearInfoSensores() {
+    for (const sensor of this.sensores_habitacion) {
+      this.dispositivo_id_sensor_nombre.set(sensor.dispositivo_id, sensor.nombre);
+      this.dispositivo_id_sensor_tipo.set(sensor.dispositivo_id, TIPOS_SENSORES.get(sensor.tipo_sensor));
+    }
   }
 
   obtenerServiciosPorHabitacion() {
@@ -116,7 +139,6 @@ export class ResumenHabitacionComponent implements OnInit {
       (error: HttpErrorResponse) => {
         this.toaster.error(error.status + ' error: ' + error.error.message);
         console.log(error);
-        this.loading = false;
       }
     );
   }
@@ -129,7 +151,6 @@ export class ResumenHabitacionComponent implements OnInit {
       (error: HttpErrorResponse) => {
         this.toaster.error(error.status + ' error: ' + error.error.message);
         console.log(error);
-        this.loading = false;
       }
     );
   }
@@ -152,6 +173,10 @@ export class ResumenHabitacionComponent implements OnInit {
       return 'text-white bg-primary';
     }
     return 'bg-light';
+  }
+
+  estampaDeTiempoAFechaLeible(estampa_de_tiempo: string) {
+    return estampa_de_tiempo.split('.')[0].replace('T', ' ');
   }
 
 }

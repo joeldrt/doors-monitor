@@ -29,6 +29,18 @@
     </div>
   </div>
 </div>
+
+<!-- loading div -->
+<div class="dashboard-dg-content" *ngIf="!complejo || !habitacion">
+  <div class="app-loading" style="min-height: inherit; min-width: inherit">
+    <div class="logo"></div>
+    <svg class="spinner" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+    </svg>
+  </div>
+</div>
+<!-- end loading div -->
+
 <div class="dashboard-dg-content" *ngIf="complejo && habitacion">
   <div style="display: block;">
     <h5>{{complejo.nombre}}</h5>
@@ -47,7 +59,7 @@
   </div>
   <div style="display: block; margin-top: 20px">
     <div style="position: relative; margin-left: auto; margin-right: auto; display: table">
-      <h1>${{ganancia_total}}</h1>
+      <h1>{{ganancia_total | currency}}</h1>
     </div>
   </div>
   <div style="display: block; margin-top: 20px">
@@ -59,13 +71,16 @@
     <div *ngFor="let registro of registros">
       <div class="card mb-3" [ngClass]="obtenerTipoTarjetaRegistro(registro.tipo_evento)">
         <div class="card-header">
-          {{registro.fecha_creacion}}
+          {{estampaDeTiempoAFechaLeible(registro.fecha_creacion)}}
           <div class="pull-right">
             {{registro.tipo_evento.toLowerCase()}}
           </div>
         </div>
         <div class="card-body">
-          <h5 class="card-title">{{registro.dispositivo_id}}</h5>
+          <div class="card-title">
+            <span [ngClass]="dispositivo_id_sensor_tipo.get(registro.dispositivo_id)"></span>
+            {{dispositivo_id_sensor_nombre.get(registro.dispositivo_id)}}
+          </div>
         </div>
       </div>
     </div>

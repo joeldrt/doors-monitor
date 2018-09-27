@@ -56,7 +56,7 @@ export class ResumenComplejoComponent implements OnInit {
   }
 
   inicializarMapas() {
-    this.complejo = new Complejo();
+    this.complejo = undefined;
     this.habitaciones = new Array<Habitacion>();
     this.servicios_por_habitacion = new Map<string, number>();
     this.estado_de_habitacion = new Map<string, string>();

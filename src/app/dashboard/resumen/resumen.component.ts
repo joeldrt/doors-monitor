@@ -40,14 +40,14 @@ export class ResumenComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.cargarComplejos();
-    this.inicializarMapas();
     this.HOY_SERVICIO = this.datePipe.transform(this.HOY, 'yyyy-MM-dd');
     this.FECHA_INICIAL = this.HOY_SERVICIO;
     this.FECHA_FINAL = this.HOY_SERVICIO;
+    this.cargarComplejos();
   }
 
   inicializarMapas() {
+    this.complejos = undefined;
     this.habitaciones_por_complejo = new Map<string, Array<Habitacion>>();
     this.servicios_por_complejo = new Map<string, number>();
     this.servicios_por_habitacion = new Map<string, number>();
