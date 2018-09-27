@@ -43,6 +43,7 @@ import {
 import { ConfiguracionSensoresComponent } from './dashboard/configuracion-sensores/configuracion-sensores.component';
 import { ConfiguracionSensoresDetalleComponent } from './dashboard/configuracion-sensores-detalle/configuracion-sensores-detalle.component';
 import { ResumenComplejoComponent } from './dashboard/resumen-complejo/resumen-complejo.component';
+import { ResumenHabitacionComponent } from './dashboard/resumen-habitacion/resumen-habitacion.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ResumenComplejoComponent } from './dashboard/resumen-complejo/resumen-c
     ConfiguracionHabitacionesDetalleComponent,
     ConfiguracionSensoresComponent,
     ConfiguracionSensoresDetalleComponent,
-    ResumenComplejoComponent
+    ResumenComplejoComponent,
+    ResumenHabitacionComponent
   ],
   imports: [
     BrowserModule,

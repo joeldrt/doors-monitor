@@ -13,6 +13,7 @@ export class HabitacionesService {
   private API_URL: string;
   private API_URLxComplejo: string;
   private API_URL_Servicios: string;
+  private API_URL_Registros: string;
 
   constructor(
     private http: HttpClient
@@ -20,6 +21,7 @@ export class HabitacionesService {
     this.API_URL = environment.API_URL + '/api/app/user/habitaciones';
     this.API_URLxComplejo = environment.API_URL + '/api/app/user/habitaciones_complejo';
     this.API_URL_Servicios = environment.API_URL + '/api/app/user/habitaciones_servicios';
+    this.API_URL_Registros = environment.API_URL + '/api/app/user/habitaciones_registros';
   }
 
   guardarHabitacion(habitacion: Habitacion): Observable<HttpResponse<Habitacion>> {
@@ -52,6 +54,14 @@ export class HabitacionesService {
       .set('fecha_inicial', fecha_inicial)
       .set('fecha_final', fecha_final);
     return this.http.get<HttpResponse<any>>(this.API_URL_Servicios + '/' + habitacion_id, {params: parametros, observe: 'response'});
+  }
+
+  obtenerRegistrosPorHabitacionEntreFechas(habitacion_id: string, fecha_inicial: string, fecha_final: string):
+  Observable<HttpResponse<any>> {
+    const parametros = new HttpParams()
+      .set('fecha_inicial', fecha_inicial)
+      .set('fecha_final', fecha_final);
+    return this.http.get<HttpResponse<any>>(this.API_URL_Registros + '/' + habitacion_id, {params: parametros, observe: 'response'});
   }
 
 }

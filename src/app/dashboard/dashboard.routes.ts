@@ -10,11 +10,13 @@ import {
 import { ConfiguracionSensoresComponent } from './configuracion-sensores/configuracion-sensores.component';
 import { ConfiguracionSensoresDetalleComponent } from './configuracion-sensores-detalle/configuracion-sensores-detalle.component';
 import { ResumenComplejoComponent } from './resumen-complejo/resumen-complejo.component';
+import { ResumenHabitacionComponent } from './resumen-habitacion/resumen-habitacion.component';
 
 export const DASHBOARD_ROUTES: Routes = [
   {path: '', redirectTo: 'resumen', pathMatch: 'full'},
   {path: 'resumen', component: ResumenComponent},
   {path: 'resumen/complejo/:complejo_id', component: ResumenComplejoComponent},
+  {path: 'resumen/complejo/:complejo_id/habitacion/:habitacion_id', component: ResumenHabitacionComponent},
   {path: 'configuracion', component: ConfiguracionComponent},
   {path: 'configuracion/complejos', component: ConfiguracionComplejosComponent},
   {path: 'configuracion/complejos/:complejo_id', component: ConfiguracionComplejosDetalleComponent},

@@ -1,7 +1,7 @@
 <div class="dashboard-dg-nav">
   <div class="left-place">
     <h5>
-      <button type="button" class="btn btn-link mr-auto" routerLink="/resumen">
+      <button type="button" class="btn btn-link mr-auto" routerLink="/resumen/complejo/{{complejo_id}}">
         <span class="fas fa-chevron-left"></span>
       </button>
     </h5>
@@ -29,9 +29,15 @@
     </div>
   </div>
 </div>
-<div class="dashboard-dg-content" *ngIf="complejo">
+<div class="dashboard-dg-content" *ngIf="complejo && habitacion">
   <div style="display: block;">
     <h5>{{complejo.nombre}}</h5>
+    <h5>
+      <span [ngClass]="tipos_habitacion.get(habitacion.tipo)"></span>
+      {{habitacion.nombre}}
+    </h5>
+    <span class="badge badge-secondary" *ngIf="habitacion.tipo != 'Servicio'">Disponible</span>
+    <span class="badge badge-primary" *ngIf="habitacion.tipo == 'Servicio'">En servicio</span>
   </div>
   <div style="display: block;">
     <div style="position: relative; margin-left: auto; margin-right: auto; display: table">
@@ -46,22 +52,20 @@
   </div>
   <div style="display: block; margin-top: 20px">
     <h5>
-      Habitaciones
+      Registros de los dispositivos
     </h5>
   </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-6 col-md-4 col-lg-3" *ngFor="let habitacion of habitaciones">
-        <div style="display: block">
-          <div style="margin-top: 20px; margin-left: auto; margin-right: auto; display: table; position: relative;" 
-            [ngStyle]="{'color': getColor(estado_de_habitacion.get(habitacion.id))}"
-            routerLink="/resumen/complejo/{{complejo_id}}/habitacion/{{habitacion.id}}">
-              <span class="fa-2x" [ngClass]="tipos_habitacion.get(habitacion.tipo)"></span>
-              <span class="badge badge-success" style="position: absolute; top: -12px; right: -12px;">{{servicios_por_habitacion.get(habitacion.id)}}</span>
+  <div>
+    <div *ngFor="let registro of registros">
+      <div class="card mb-3" [ngClass]="obtenerTipoTarjetaRegistro(registro.tipo_evento)">
+        <div class="card-header">
+          {{registro.fecha_creacion}}
+          <div class="pull-right">
+            {{registro.tipo_evento.toLowerCase()}}
           </div>
-          <div style="margin-top: 10px; margin-left: auto; margin-right: auto; display: table;">
-            {{habitacion.nombre}}
-          </div>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{registro.dispositivo_id}}</h5>
         </div>
       </div>
     </div>
