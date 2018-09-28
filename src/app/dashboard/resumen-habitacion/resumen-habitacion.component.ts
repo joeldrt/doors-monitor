@@ -13,6 +13,8 @@ import { Registro } from '../../_models/registro';
 import { Sensor, TIPOS_SENSORES } from '../../_models/sensor';
 import { SensoresService } from '../../_services/sensores.service';
 
+import { ResumenHabitacion } from '../../_models/resumen_habitacion';
+
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -31,11 +33,8 @@ export class ResumenHabitacionComponent implements OnInit {
   complejo_id: string;
   complejo: Complejo;
   habitacion_id: string;
-  habitacion: Habitacion;
-  registros: Registro[];
-  total_servicios = 0;
-  estado_de_habitacion: string;
-  ganancia_total = 0;
+
+  resumen_habitacion: ResumenHabitacion;
 
   sensores_habitacion: Sensor[];
   dispositivo_id_sensor_nombre: Map<string, string>;
@@ -70,15 +69,12 @@ export class ResumenHabitacionComponent implements OnInit {
     this.inicializarMapas();
     this.cargarSensores();
     this.cargarComplejo();
-    this.cargarHabitacion();
+    this.obtenerResuemenPorHabitacion();
   }
 
   inicializarMapas() {
     this.complejo = undefined;
-    this.habitacion = undefined;
-    this.total_servicios = 0;
-    this.estado_de_habitacion = 'Desconocido';
-    this.ganancia_total = 0;
+    this.resumen_habitacion = undefined;
   }
 
   cargarComplejo() {
@@ -93,11 +89,10 @@ export class ResumenHabitacionComponent implements OnInit {
     );
   }
 
-  cargarHabitacion() {
-    this.habitacionesService.obtenerHabitacion(this.habitacion_id).subscribe(
-      (response: HttpResponse<Complejo>) => {
-        this.habitacion = response.body;
-        this.obtenerServiciosPorHabitacion();
+  obtenerResuemenPorHabitacion() {
+    this.habitacionesService.obtenerServiciosPorHabitacionEntreFechas(this.habitacion_id, this.FECHA_INICIAL, this.FECHA_FINAL).subscribe(
+      (response: HttpResponse<any>) => {
+        this.resumen_habitacion = response.body;
       },
       (error: HttpErrorResponse) => {
         this.toaster.error(error.status + ' error: ' + error.error.message);
@@ -128,41 +123,11 @@ export class ResumenHabitacionComponent implements OnInit {
     }
   }
 
-  obtenerServiciosPorHabitacion() {
-    this.habitacionesService.obtenerServiciosPorHabitacionEntreFechas(this.habitacion.id, this.FECHA_INICIAL, this.FECHA_FINAL).subscribe(
-      (response: HttpResponse<any>) => {
-        this.total_servicios = response.body.numero_servicios;
-        this.estado_de_habitacion = response.body.ultimo_status;
-        if (this.habitacion.precio_base) {
-          this.ganancia_total = response.body.numero_servicios * this.habitacion.precio_base;
-        } else {
-          this.ganancia_total = 0;
-        }
-        this.obtenerRegistrosPorHabitacion();
-      },
-      (error: HttpErrorResponse) => {
-        this.toaster.error(error.status + ' error: ' + error.error.message);
-        console.log(error);
-      }
-    );
-  }
-
-  obtenerRegistrosPorHabitacion() {
-    this.habitacionesService.obtenerRegistrosPorHabitacionEntreFechas(this.habitacion.id, this.FECHA_INICIAL, this.FECHA_FINAL).subscribe(
-      (response: HttpResponse<any>) => {
-        this.registros = response.body;
-      },
-      (error: HttpErrorResponse) => {
-        this.toaster.error(error.status + ' error: ' + error.error.message);
-        console.log(error);
-      }
-    );
-  }
-
   actualizarElNumeroDeServicios() {
     this.inicializarMapas();
+    this.cargarSensores();
     this.cargarComplejo();
-    this.cargarHabitacion();
+    this.obtenerResuemenPorHabitacion();
   }
 
   getColor(estado_habitacion: string) {

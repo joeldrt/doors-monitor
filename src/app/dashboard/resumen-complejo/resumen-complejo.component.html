@@ -31,7 +31,7 @@
 </div>
 
 <!-- loading div -->
-<div class="dashboard-dg-content" *ngIf="!complejo">
+<div class="dashboard-dg-content" *ngIf="!resumen_complejo">
   <div class="app-loading" style="min-height: inherit; min-width: inherit">
     <div class="logo"></div>
     <svg class="spinner" viewBox="25 25 50 50">
@@ -41,19 +41,19 @@
 </div>
 <!-- end loading div -->
 
-<div class="dashboard-dg-content" *ngIf="complejo">
+<div class="dashboard-dg-content" *ngIf="resumen_complejo">
   <div style="display: block;">
-    <h5>{{complejo.nombre}}</h5>
+    <h5>{{resumen_complejo.complejo.nombre}}</h5>
   </div>
   <div style="display: block;">
     <div style="position: relative; margin-left: auto; margin-right: auto; display: table">
-      <h1>{{total_servicios}}</h1>
+      <h1>{{resumen_complejo.total_servicios}}</h1>
       <span class="badge badge-success" style="position: absolute; bottom: 0; right: -60px;">servicios</span>
     </div>
   </div>
   <div style="display: block; margin-top: 20px">
     <div style="position: relative; margin-left: auto; margin-right: auto; display: table">
-      <h1>{{ganancia_total | currency}}</h1>
+      <h1>{{resumen_complejo.ganancia_total | currency}}</h1>
     </div>
   </div>
   <div style="display: block; margin-top: 20px">
@@ -61,19 +61,19 @@
       Habitaciones
     </h5>
   </div>
-  <div class="container">
+  <div class="container" style="overflow: unset !important">
     <div class="dg-rows-wrapper">
       <div class="row">
-        <div class="col-6 col-md-4 col-lg-3" *ngFor="let habitacion of habitaciones">
+        <div class="col-6 col-md-4 col-lg-3" *ngFor="let resumen of resumen_complejo.resumen_habitaciones">
           <div style="display: block">
             <div style="margin-top: 20px; margin-left: auto; margin-right: auto; display: table; position: relative;"
-              [ngStyle]="{'color': getColor(estado_de_habitacion.get(habitacion.id))}"
-              routerLink="/resumen/complejo/{{complejo_id}}/habitacion/{{habitacion.id}}">
-                <span class="fa-2x" [ngClass]="tipos_habitacion.get(habitacion.tipo)"></span>
-                <span class="badge badge-success" style="position: absolute; top: -12px; right: -12px;">{{servicios_por_habitacion.get(habitacion.id)}}</span>
+              [ngStyle]="{'color': getColor(resumen.habitacion.ultimo_status)}"
+              routerLink="/resumen/complejo/{{complejo_id}}/habitacion/{{resumen.habitacion.id}}">
+                <span class="fa-2x" [ngClass]="tipos_habitacion.get(resumen.habitacion.tipo)"></span>
+                <span class="badge badge-success" style="position: absolute; top: -12px; right: -12px;">{{resumen.numero_servicios}}</span>
             </div>
             <div style="margin-top: 10px; margin-left: auto; margin-right: auto; display: table;">
-              {{habitacion.nombre}}
+              {{resumen.habitacion.nombre}}
             </div>
           </div>
         </div>

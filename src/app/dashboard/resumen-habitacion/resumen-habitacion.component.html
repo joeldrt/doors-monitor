@@ -31,7 +31,7 @@
 </div>
 
 <!-- loading div -->
-<div class="dashboard-dg-content" *ngIf="!complejo || !habitacion">
+<div class="dashboard-dg-content" *ngIf="!complejo || !resumen_habitacion">
   <div class="app-loading" style="min-height: inherit; min-width: inherit">
     <div class="logo"></div>
     <svg class="spinner" viewBox="25 25 50 50">
@@ -41,25 +41,25 @@
 </div>
 <!-- end loading div -->
 
-<div class="dashboard-dg-content" *ngIf="complejo && habitacion">
+<div class="dashboard-dg-content" *ngIf="complejo && resumen_habitacion">
   <div style="display: block;">
     <h5>{{complejo.nombre}}</h5>
     <h5>
-      <span [ngClass]="tipos_habitacion.get(habitacion.tipo)"></span>
-      {{habitacion.nombre}}
+      <span [ngClass]="tipos_habitacion.get(resumen_habitacion.habitacion.tipo)"></span>
+      {{resumen_habitacion.habitacion.nombre}}
     </h5>
-    <span class="badge badge-secondary" *ngIf="estado_de_habitacion != 'Servicio'">Disponible</span>
-    <span class="badge badge-primary" *ngIf="estado_de_habitacion == 'Servicio'">En servicio</span>
+    <span class="badge badge-secondary" *ngIf="resumen_habitacion.ultimo_status != 'Servicio'">Disponible</span>
+    <span class="badge badge-primary" *ngIf="resumen_habitacion.ultimo_status == 'Servicio'">En servicio</span>
   </div>
   <div style="display: block;">
     <div style="position: relative; margin-left: auto; margin-right: auto; display: table">
-      <h1>{{total_servicios}}</h1>
+      <h1>{{resumen_habitacion.numero_servicios}}</h1>
       <span class="badge badge-success" style="position: absolute; bottom: 0; right: -60px;">servicios</span>
     </div>
   </div>
   <div style="display: block; margin-top: 20px">
     <div style="position: relative; margin-left: auto; margin-right: auto; display: table">
-      <h1>{{ganancia_total | currency}}</h1>
+      <h1>{{resumen_habitacion.ganancia | currency}}</h1>
     </div>
   </div>
   <div style="display: block; margin-top: 20px">
@@ -68,7 +68,7 @@
     </h5>
   </div>
   <div>
-    <div *ngFor="let registro of registros">
+    <div *ngFor="let registro of resumen_habitacion.registros">
       <div class="card mb-3" [ngClass]="obtenerTipoTarjetaRegistro(registro.tipo_evento)">
         <div class="card-header">
           {{estampaDeTiempoAFechaLeible(registro.fecha_creacion)}}
