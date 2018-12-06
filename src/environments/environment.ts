@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://localhost:5000'
-  // API_URL: 'http://devdigiall.tk:9630'
+  // API_URL: 'http://localhost:5000'
+  API_URL: 'https://ifttt.devdigiall.tk'
 };
 
 /*
